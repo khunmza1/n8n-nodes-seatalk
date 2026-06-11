@@ -102,7 +102,7 @@ export class SeaTalk implements INodeType {
                         displayName: 'Email',
                         placeholder: 'name@email.com',
                         values: [
-                            { displayName: 'Email Address', name: 'email', type: 'string', default: '' },
+                            { displayName: 'Email Address', name: 'email', type: 'string', placeholder: 'name@email.com', default: '' },
                         ],
                     },
                 ],
@@ -209,7 +209,6 @@ export class SeaTalk implements INodeType {
         const items = this.getInputData();
         const returnData: INodeExecutionData[] = [];
         const credentials = await this.getCredentials('seaTalkApi');
-// eslint-disable-next-line @n8n/community-nodes/no-http-request-with-manual-auth
         const authResponse = await this.helpers['httpRequest']({
             method: 'POST',
             url: 'https://openapi.seatalk.io/auth/app_access_token',
@@ -289,7 +288,6 @@ export class SeaTalk implements INodeType {
                 } else {
                     body.employee_code = recipientId;
                 }
-// eslint-disable-next-line @n8n/community-nodes/no-http-request-with-manual-auth
                 const responseData = await this.helpers['httpRequest']({
                     method: 'POST',
                     url: recipientType === 'group' ? 'https://openapi.seatalk.io/messaging/v2/group_chat' : 'https://openapi.seatalk.io/messaging/v2/single_chat',
