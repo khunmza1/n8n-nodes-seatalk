@@ -5,7 +5,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write # CRITICAL: This allows GitHub to ask npm for an authentic session
 
 jobs:
   build-and-publish:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'  # Changed from 18.x to 22.x
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
@@ -28,5 +28,4 @@ jobs:
 
       - name: Publish to npm with Provenance
         run: npm publish --provenance --access public --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # Note: We completely removed the env: NODE_AUTH_TOKEN line!
