@@ -210,7 +210,7 @@ export class SeaTalk implements INodeType {
     
         const authResponse = await this.helpers.httpRequest({
             method: 'POST',
-            uri: 'https://openapi.seatalk.io/auth/app_access_token',
+            url: 'https://openapi.seatalk.io/auth/app_access_token',
             body: { app_id: credentials.appId, app_secret: credentials.appSecret },
             json: true,
         });
@@ -290,7 +290,7 @@ export class SeaTalk implements INodeType {
 
                 const responseData = await this.helpers.httpRequest({
                     method: 'POST',
-                    uri: recipientType === 'group' ? 'https://openapi.seatalk.io/messaging/v2/group_chat' : 'https://openapi.seatalk.io/messaging/v2/single_chat',
+                    url: recipientType === 'group' ? 'https://openapi.seatalk.io/messaging/v2/group_chat' : 'https://openapi.seatalk.io/messaging/v2/single_chat',
                     headers: { Authorization: `Bearer ${token}` },
                     body,
                     json: true,
