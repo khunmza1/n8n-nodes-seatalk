@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-seatalk",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Custom n8n nodes for SeaTalk Open Platform",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
     ],
     "author": {
         "name": "Sorawith",
-        "email": ""
+        "email": "myit121@gmail.com"
     },
     "repository": {
         "type": "git",
