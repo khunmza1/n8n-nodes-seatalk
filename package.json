@@ -1,6 +1,6 @@
 {
     "name": "n8n-nodes-seatalk",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Custom n8n nodes for SeaTalk Open Platform",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -30,10 +30,15 @@
         "dist"
     ],
     "n8n": {
+  "n8nNodesApiVersion": 1,
   "nodes": [
     "dist/nodes/SeaTalk/SeaTalk.node.js",
     "dist/nodes/SeaTalk/SeaTalkTrigger.node.js"
   ],
+  "credentials": [
+    "dist/credentials/SeaTalkApi.credentials.js"
+  ]
+},
   "credentials": [
     "dist/credentials/SeaTalkApi.credentials.js"
   ]
