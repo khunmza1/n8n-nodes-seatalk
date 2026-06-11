@@ -39,10 +39,6 @@
     "dist/credentials/SeaTalkApi.credentials.js"
   ]
 },
-  "credentials": [
-    "dist/credentials/SeaTalkApi.credentials.js"
-  ]
-},
     "devDependencies": {
         "@n8n/node-cli": "*",
         "eslint": "9.39.4",
