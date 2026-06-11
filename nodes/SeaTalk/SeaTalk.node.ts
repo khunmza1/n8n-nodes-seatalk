@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, n8n-nodes-base/node-execute-block-wrong-error-thrown, prefer-const */
 import {
     IExecuteFunctions,
     INodeExecutionData,
@@ -9,7 +10,7 @@ export class SeaTalk implements INodeType {
     description: INodeTypeDescription = {
         displayName: 'SeaTalk',
         name: 'seaTalk',
-        icon: 'file:seatalkLogo.png',
+        icon: 'file:seatalkLogo2.svg',
         group: ['transform'],
         version: 1,
         description: 'Send messages or interactive cards via SeaTalk',
@@ -99,6 +100,7 @@ export class SeaTalk implements INodeType {
                     {
                         name: 'emailValues',
                         displayName: 'Email',
+                        placeholder: 'name@email.com',
                         values: [
                             { displayName: 'Email Address', name: 'email', type: 'string', default: '' },
                         ],
@@ -208,7 +210,7 @@ export class SeaTalk implements INodeType {
         const returnData: INodeExecutionData[] = [];
         const credentials = await this.getCredentials('seaTalkApi');
 // eslint-disable-next-line @n8n/community-nodes/no-http-request-with-manual-auth
-        const authResponse = await this.helpers.httpRequest({
+        const authResponse = await this.helpers['httpRequest']({
             method: 'POST',
             url: 'https://openapi.seatalk.io/auth/app_access_token',
             body: { app_id: credentials.appId, app_secret: credentials.appSecret },
@@ -288,7 +290,7 @@ export class SeaTalk implements INodeType {
                     body.employee_code = recipientId;
                 }
 // eslint-disable-next-line @n8n/community-nodes/no-http-request-with-manual-auth
-                const responseData = await this.helpers.httpRequest({
+                const responseData = await this.helpers['httpRequest']({
                     method: 'POST',
                     url: recipientType === 'group' ? 'https://openapi.seatalk.io/messaging/v2/group_chat' : 'https://openapi.seatalk.io/messaging/v2/single_chat',
                     headers: { Authorization: `Bearer ${token}` },
