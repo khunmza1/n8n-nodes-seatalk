@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, prefer-const */
 import {
+    IHookFunctions,
     IWebhookFunctions,
     IWebhookResponseData,
     INodeType,
@@ -9,10 +11,11 @@ export class SeaTalkTrigger implements INodeType {
     description: INodeTypeDescription = {
         displayName: 'SeaTalk Trigger',
         name: 'seaTalkTrigger',
-        icon: 'file:seatalkLogo.png',
+        icon: 'file:seatalkLogo2.svg',
         group: ['trigger'],
         version: 1,
         description: 'Starts the workflow when a SeaTalk message is received',
+        usableAsTool: true,
         defaults: { name: 'SeaTalk Trigger' },
         inputs: [],
         outputs: ['main'],
@@ -25,6 +28,24 @@ export class SeaTalkTrigger implements INodeType {
             },
         ],
         properties: [],
+    };
+
+    // Notice how webhookMethods is OUTSIDE the description block!
+    webhookMethods = {
+        default: {
+            async checkExists(this: IHookFunctions): Promise<boolean> {
+                // SeaTalk webhooks are registered manually in the Developer Console
+                return true;
+            },
+            async create(this: IHookFunctions): Promise<boolean> {
+                // Return true to allow workflow activation
+                return true;
+            },
+            async delete(this: IHookFunctions): Promise<boolean> {
+                // Return true to allow workflow deactivation
+                return true;
+            },
+        },
     };
 
     async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {

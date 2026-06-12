@@ -1,9 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, n8n-nodes-base/node-execute-block-wrong-error-thrown, prefer-const */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     IExecuteFunctions,
     INodeExecutionData,
     INodeType,
     INodeTypeDescription,
+    NodeApiError,
+    NodeOperationError,
 } from 'n8n-workflow';
 
 export class SeaTalk implements INodeType {
@@ -263,13 +265,16 @@ export class SeaTalk implements INodeType {
                     if (description) elements.push({ element_type: 'description', description: { format: 1, text: description } });
                     if (imageContent) elements.push({ element_type: 'image', image: { content: imageContent } });
                     const vButtons = vButtonsData.buttonValues || [];
-                    if (vButtons.length > 5) throw new Error(`Max 5 Vertical Buttons allowed.`);
+                    if (vButtons.length > 5) throw new NodeOperationError(this.getNode(), `Max 5 Vertical Buttons allowed.`);
+
                     vButtons.forEach((btn: any) => elements.push({ element_type: 'button', button: buildBtn(btn) }));
+
                     const hGroups = hGroupsData.groupValues || [];
-                    if (hGroups.length > 3) throw new Error(`Max 3 Horizontal Groups allowed.`);
+                    if (hGroups.length > 3) throw new NodeOperationError(this.getNode(), `Max 3 Horizontal Groups allowed.`);
+
                     hGroups.forEach((group: any) => {
                         const btns = group.buttons?.button || [];
-                        if (btns.length > 3) throw new Error(`Max 3 buttons per group.`);
+                        if (btns.length > 3) throw new NodeOperationError(this.getNode(), `Max 3 buttons per group.`);
                         elements.push({ element_type: 'button_group', button_group: btns.map((b: any) => buildBtn(b)) });
                     });
                     messagePayload = { tag: 'interactive_message', interactive_message: { elements } };
@@ -298,11 +303,11 @@ export class SeaTalk implements INodeType {
 
                 returnData.push({ json: responseData });
             } catch (error) {
-                if (this.continueOnFail()) {
-                    returnData.push({ json: { error: error.message } });
-                    continue;
-                }
-                throw error;
+            if (this.continueOnFail()) {
+                returnData.push({ json: { error: error.message } });
+                continue;
+            }
+            throw new NodeApiError(this.getNode(), error as any);
             }
         }
         return [returnData];

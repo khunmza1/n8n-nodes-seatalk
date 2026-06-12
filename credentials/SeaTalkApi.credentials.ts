@@ -2,11 +2,12 @@ import {
 	ICredentialType,
 	INodeProperties,
 	ICredentialTestRequest,
+	Icon,
 } from 'n8n-workflow';
-
 export class SeaTalkApi implements ICredentialType {
-	name = 'seaTalkApi';
-	displayName = 'SeaTalk API';
+    name = 'seaTalkApi';
+    displayName = 'SeaTalk API';
+    icon: Icon = 'file:seatalkLogo2.svg'; // <--- Add `: Icon` right here
 	documentationUrl = 'https://open.seatalk.io/docs/';
 	properties: INodeProperties[] = [
 		{
